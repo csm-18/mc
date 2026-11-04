@@ -1,4 +1,5 @@
 //@pub
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdlib.h>
 
@@ -10,6 +11,7 @@ typedef struct {
 
 String s(char *text);
 void s_free(String *str);
+bool s_ends_with(String *str, String *suffix);
 
 //@end
 
@@ -45,4 +47,19 @@ void s_free(String *str) {
     free(str->s);
   }
   str->s = NULL;
+}
+
+bool s_ends_with(String *str, String *suffix) {
+  if (str == NULL || suffix == NULL) {
+    panic("error: NULL passed to s_ends_with()");
+  }
+
+  if (suffix->len > str->len) {
+    return false;
+  }
+
+  if (strcmp(str->s + (str->len - suffix->len), suffix->s) == 0) {
+    return true;
+  }
+  return false;
 }

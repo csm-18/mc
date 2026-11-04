@@ -1,10 +1,12 @@
 //@pub
 //@end
 
+#include "string_type.h"
 #include "string_vector_type.h"
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef struct {
   bool version;
@@ -14,11 +16,28 @@ typedef struct {
 } Options;
 
 int main(int argc, char **argv) {
-  StringVector args = s_vec(8);
-  s_vec_append(&args, argv[0]);
-  for (size_t i = 0; i < args.len; i += 1) {
-    puts(args.items[i].s);
+  String str = s("buddy!");
+  String suffix = s(argv[1]);
+  if (s_ends_with(&str, &suffix)) {
+    puts("true!");
   }
-  s_vec_free(&args);
+  // Options options = {.version = false,
+  //                    .help = false,
+  //                    .watch = false,
+  //                    .src_paths = s_vec(argc)};
+
+  // for (int i = 1; i < argc; i += 1) {
+  //   if (strcmp(argv[i], "-v") == 0) {
+  //     options.version = true;
+  //   } else if (strcmp(argv[i], "-h") == 0) {
+  //     options.help = true;
+  //   } else if (strcmp(argv[i], "-w") == 0) {
+  //     options.watch = true;
+  //   } else {
+  //     char *arg = argv[i];
+  //     int arg_len = strlen(arg);
+  //   }
+  // }
+
   return 0;
 }
