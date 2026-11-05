@@ -1,6 +1,7 @@
 //@pub
 //@end
 
+#include "header_generator.h"
 #include "string_type.h"
 #include "string_vector_type.h"
 #include "utils.h"
@@ -78,7 +79,15 @@ int main(int argc, char **argv) {
   } else if (options.watch) {
     puts("watching!");
   } else {
-    puts("yo!");
+    if (options.src_paths.len != 0) {
+      String src_path = s(options.src_paths.items[0].s);
+      String header_path = s(options.src_paths.items[0].s);
+      header_path.s[header_path.len - 1] = 'h';
+      generate_header_file(src_path, header_path);
+
+      s_free(&src_path);
+      s_free(&header_path);
+    }
   }
 
   s_vec_free(&options.src_paths);
