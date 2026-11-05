@@ -1,5 +1,5 @@
 # mc
-A pre-preprocessor for C for header files generation using a custom macro syntax.
+A pre-preprocessor for C for header files generation using comment macro syntax.
 
 
 ## Example

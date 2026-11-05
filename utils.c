@@ -1,5 +1,6 @@
 //@pub
 #include <stddef.h>
+#include <string.h>
 
 void panic(char *msg);
 void *alloc(size_t size);
@@ -10,7 +11,9 @@ void *resize(void *src, size_t size);
 #include <stdlib.h>
 
 void panic(char *msg) {
-  puts(msg);
+  if (strlen(msg) != 0) {
+    puts(msg);
+  }
   exit(1);
 }
 
