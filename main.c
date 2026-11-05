@@ -83,7 +83,7 @@ int main(int argc, char **argv) {
       String src_path = s(options.src_paths.items[0].s);
       String header_path = s(options.src_paths.items[0].s);
       header_path.s[header_path.len - 1] = 'h';
-      generate_header_file(src_path, header_path);
+      StringVector errors = generate_header_file(src_path, header_path);
 
       s_free(&src_path);
       s_free(&header_path);
