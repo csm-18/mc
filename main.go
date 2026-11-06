@@ -95,11 +95,10 @@ func main() {
 				}
 			}
 
-			for i := 0; i < len(options.SrcPaths); i++ {
-				fmt.Println("src:")
-				fmt.Println(options.SrcPaths[i])
-				fmt.Println("header:")
-				fmt.Println(options.HeaderPaths[i])
+			err := generate_header_file(options.SrcPaths[0], options.HeaderPaths[0])
+			if err != "" {
+				fmt.Println(err)
+				os.Exit(1)
 			}
 
 		}
