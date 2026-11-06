@@ -3,16 +3,18 @@ package main
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
 type Options struct {
-	Version    bool
-	Help       bool
-	Watch      bool
-	SrcPaths   []string
-	OutDirPath string
-	Errors     []string
+	Version     bool
+	Help        bool
+	Watch       bool
+	SrcPaths    []string
+	OutDirPath  string
+	HeaderPaths []string
+	Errors      []string
 }
 
 func main() {
@@ -79,7 +81,28 @@ func main() {
 	} else if options.Watch {
 		fmt.Println("watching!")
 	} else {
-		fmt.Println("yo!")
+		if len(options.SrcPaths) != 0 {
+			if options.OutDirPath != "" {
+				for _, src_path := range options.SrcPaths {
+					filename := filepath.Base(src_path)
+					header_path := filepath.Join(options.OutDirPath, filename[:len(filename)-1]+"h")
+					options.HeaderPaths = append(options.HeaderPaths, header_path)
+				}
+			} else {
+				for _, src_path := range options.SrcPaths {
+					header_path := src_path[:len(src_path)-1] + "h"
+					options.HeaderPaths = append(options.HeaderPaths, header_path)
+				}
+			}
+
+			for i := 0; i < len(options.SrcPaths); i++ {
+				fmt.Println("src:")
+				fmt.Println(options.SrcPaths[i])
+				fmt.Println("header:")
+				fmt.Println(options.HeaderPaths[i])
+			}
+
+		}
 	}
 
 }
