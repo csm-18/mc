@@ -9,7 +9,6 @@ StringVector generate_header_file(String src_path, String header_path);
 
 StringVector generate_header_file(String src_path, String header_path) {
   StringVector errors = s_vec(8);
-  puts(header_path.s);
 
   return errors;
 }
