@@ -14,7 +14,7 @@ type HeaderContent struct {
 func generate_header_file(src_path string, header_file_path string) string {
 	error := ""
 	header_content := HeaderContent{}
-	header_content.Content = "#pragma once\n\n"
+	header_content.Content = "//@mc\n#pragma once\n\n"
 	pub_macro_start := false
 	pub_macro_end := false
 
@@ -206,7 +206,7 @@ func generate_header_file(src_path string, header_file_path string) string {
 				return error
 			}
 		} else {
-			error = fmt.Sprintf("!error: Valid @pub macro must be present at the top of the file '%s'.", src_path)
+			error = fmt.Sprintf("error: Valid @pub macro must be present at the top of the file '%s'.", src_path)
 			return error
 
 		}
