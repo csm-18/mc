@@ -32,7 +32,7 @@ func main() {
 			options.Help = true
 		} else if args[i] == "-w" {
 			options.Watch = true
-		} else if strings.HasSuffix(args[i], ".c") {
+		} else if strings.HasSuffix(args[i], ".c") || strings.HasSuffix(args[i], ".cc") || strings.HasSuffix(args[i], ".C") || strings.HasSuffix(args[i], ".c++") || strings.HasSuffix(args[i], ".cpp") || strings.HasSuffix(args[i], ".cxx") {
 			options.SrcPaths = append(options.SrcPaths, args[i])
 		} else if args[i] == "-o" {
 			i += 1
@@ -85,12 +85,24 @@ func main() {
 			if options.OutDirPath != "" {
 				for _, src_path := range options.SrcPaths {
 					filename := filepath.Base(src_path)
-					header_path := filepath.Join(options.OutDirPath, filename[:len(filename)-1]+"h")
+					header_path := ""
+					filename_trimmed := strings.TrimRight(filename, filepath.Ext(filename))
+					if filepath.Ext(filename) == ".c" {
+						header_path = filepath.Join(options.OutDirPath, filename_trimmed+".h")
+					} else {
+						header_path = filepath.Join(options.OutDirPath, filename_trimmed+".hpp")
+
+					}
 					options.HeaderPaths = append(options.HeaderPaths, header_path)
 				}
 			} else {
 				for _, src_path := range options.SrcPaths {
-					header_path := src_path[:len(src_path)-1] + "h"
+					header_path := ""
+					if filepath.Ext(src_path) == ".c" {
+						header_path = strings.TrimRight(src_path, filepath.Ext(src_path)) + ".h"
+					} else {
+						header_path = strings.TrimRight(src_path, filepath.Ext(src_path)) + ".hpp"
+					}
 					options.HeaderPaths = append(options.HeaderPaths, header_path)
 				}
 			}
